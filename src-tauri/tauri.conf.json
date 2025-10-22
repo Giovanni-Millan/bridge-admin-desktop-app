@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "bridge-admin",
+  "version": "0.1.0",
+  "identifier": "com.giova.bridge-admin",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "bridge-admin",
+        "width": 800,
+        "height": 600,
+        "maximized": true
+        
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/logo_bridge.png",
+      "icons/logo_bridge.png",
+      "icons/logo_bridge.png",
+      "icons/icon_icns",
+      "icons/logo_bridge.ico"
+    ]
+  }
+}
