@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../../components/Navbar';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -9,22 +9,23 @@ import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
 
-export default function Pedagogia_grupo() {
+export default function AdministracionSabatino() {
   const [alumno, setAlumno] = useState([]);
 
-  // 🔹 Cambiado el endpoint a /ConsultarAlumnosPedagogia
+  // 🔹 Endpoint adaptado a /ConsultarAlumnosAdministracionSabatino
   useEffect(() => {
-    axios.get('http://localhost:4000/ConsultarAlumnosPedagogia')
+    axios.get('http://localhost:4000/ConsultarAlumnosAdministracionSabatino')
       .then(res => setAlumno(res.data))
       .catch(err => console.log(err));
   }, []);
 
+  // 🔹 Exportar a PDF
   const exportPDF = () => {
     const doc = new jsPDF();
 
     doc.setFontSize(16);
     doc.setTextColor(85, 26, 139);
-    doc.text("Lista de Alumnos - Carrera de Pedagogía", 14, 20);
+    doc.text("Lista de Alumnos - Administración Sabatino", 14, 20);
 
     autoTable(doc, {
       startY: 30,
@@ -62,7 +63,7 @@ export default function Pedagogia_grupo() {
       }
     });
 
-    doc.save("alumnos_pedagogia.pdf");
+    doc.save("alumnos_administracion_sabatino.pdf");
 
     Swal.fire({
       icon: 'success',
@@ -73,6 +74,7 @@ export default function Pedagogia_grupo() {
     });
   };
 
+  // 🔹 Exportar a Excel
   const exportExcel = () => {
     const worksheetData = alumno.map((a) => ({
       Nombre: a.nombre,
@@ -86,9 +88,9 @@ export default function Pedagogia_grupo() {
 
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Alumnos Pedagogía");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Administración Sabatino");
 
-    XLSX.writeFile(workbook, "alumnos_pedagogia.xlsx");
+    XLSX.writeFile(workbook, "alumnos_administracion_sabatino.xlsx");
 
     Swal.fire({
       icon: 'success',
@@ -101,11 +103,11 @@ export default function Pedagogia_grupo() {
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-800">
-      <Navbar titulo="Carrera de Pedagogía - Alumnos" />
+      <Navbar titulo="Administración Sabatino - Alumnos" />
 
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="flex justify-between items-center mb-6">
-          {/* Botón de regreso */}
+          {/* 🔹 Botón de regreso */}
           <div className="mt-8 ml-10">
             <Link
               to={'/ConsultarGrupos'}
@@ -116,6 +118,7 @@ export default function Pedagogia_grupo() {
             </Link>
           </div>
 
+          {/* 🔹 Botones de exportación */}
           <div className="flex gap-3">
             <button
               onClick={exportPDF}
@@ -137,6 +140,7 @@ export default function Pedagogia_grupo() {
           </div>
         </div>
 
+        {/* 🔹 Tabla de alumnos */}
         <div className="overflow-x-auto rounded-lg shadow border border-gray-200">
           <table className="min-w-full bg-white rounded-lg">
             <thead>
@@ -154,7 +158,7 @@ export default function Pedagogia_grupo() {
               {alumno.length === 0 ? (
                 <tr>
                   <td colSpan="7" className="text-center py-6 text-gray-500 italic">
-                    No hay alumnos disponibles.
+                    No hay alumnos registrados.
                   </td>
                 </tr>
               ) : (
@@ -166,7 +170,9 @@ export default function Pedagogia_grupo() {
                     <td className="py-3 px-4">{data.nombre}</td>
                     <td className="py-3 px-4">{data.apellido_paterno}</td>
                     <td className="py-3 px-4">{data.apellido_materno}</td>
-                    <td className="py-3 px-4">{data.fecha_nacimiento}</td>
+                    <td className="p-3 text-xs">
+                      {new Date(data.fecha_nacimiento).toLocaleDateString("es-MX")}
+                    </td>
                     <td className="py-3 px-4">{data.correo}</td>
                     <td className="py-3 px-4">{data.telefono}</td>
                     <td className="py-3 px-4">{data.cuatrimestre}</td>

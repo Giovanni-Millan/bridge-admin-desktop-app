@@ -21,17 +21,62 @@ export default function InscribirAlumnos() {
     telefono: "",
     direccion: "",
     cuatrimestre: "",
-    carrera: "", // el valor del select se guarda aquí
+    carrera: "",
   });
 
-  // Opciones de carreras (puedes agregar más si lo deseas)
+  // Carreras organizadas por modalidad
   const carreras = [
-    "Ingenieria En Sistemas Computacionales",
-    "Derecho",
-    "Administración",
-    "Psicologia",
-    "Pedagogia",
-    
+    // Escolarizadas
+    { label: "— Carreras Escolarizadas —", value: "", disabled: true },
+    { label: "Ingeniería en Sistemas Computacionales (Escolarizada)", value: "Ingenieria En Sistemas Computacionales" },
+    { label: "Derecho (Escolarizada)", value: "Derecho" },
+    { label: "Administración (Escolarizada)", value: "Administración" },
+    { label: "Psicología (Escolarizada)", value: "Psicologia" },
+    { label: "Pedagogía (Escolarizada)", value: "Pedagogia" },
+    { label: "Ciencias del Deporte y Gestión Deportiva (Escolarizada)", value: "Ciencias del deporte y gestion deportiva" },
+    { label: "Contaduría (Escolarizada)", value: "Contaduria" },
+    { label: "Criminología (Escolarizada)", value: "Criminologia" },
+    { label: "Trabajo Social (Escolarizada)", value: "Trabajo social" },
+    { label: "Ingeniería Industrial (Escolarizada)", value: "Ingenieria Industrial" },
+
+    // Sabatinas
+    { label: "— Carreras Sabatinas —", value: "", disabled: true },
+    { label: "Ingeniería en Sistemas Computacionales (Sabatino)", value: "Ingenieria En Sistemas Computacionales - Sabatino" },
+    { label: "Derecho (Sabatino)", value: "Derecho - Sabatino" },
+    { label: "Administración (Sabatino)", value: "Administración - Sabatino" },
+    { label: "Psicología (Sabatino)", value: "Psicologia - Sabatino" },
+    { label: "Pedagogía (Sabatino)", value: "Pedagogia - Sabatino" },
+    { label: "Ciencias del Deporte y Gestión Deportiva (Sabatino)", value: "Ciencias del deporte y gestion deportiva - Sabatino" },
+    { label: "Contaduría (Sabatino)", value: "Contaduria - Sabatino" },
+    { label: "Criminología (Sabatino)", value: "Criminologia - Sabatino" },
+    { label: "Trabajo Social (Sabatino)", value: "Trabajo social - Sabatino" },
+    { label: "Ingeniería Industrial (Sabatino)", value: "Ingenieria Industrial - Sabatino" },
+
+    // Dominicales
+    { label: "— Carreras Dominicales —", value: "", disabled: true },
+    { label: "Ingeniería en Sistemas Computacionales (Dominical)", value: "Ingenieria En Sistemas Computacionales - Dominical" },
+    { label: "Derecho (Dominical)", value: "Derecho - Dominical" },
+    { label: "Administración (Dominical)", value: "Administración - Dominical" },
+    { label: "Psicología (Dominical)", value: "Psicologia - Dominical" },
+    { label: "Pedagogía (Dominical)", value: "Pedagogia - Dominical" },
+    { label: "Ciencias del Deporte y Gestión Deportiva (Dominical)", value: "Ciencias del deporte y gestion deportiva - Dominical" },
+    { label: "Contaduría (Dominical)", value: "Contaduria - Dominical" },
+    { label: "Criminología (Dominical)", value: "Criminologia - Dominical" },
+    { label: "Trabajo Social (Dominical)", value: "Trabajo social - Dominical" },
+    { label: "Ingeniería Industrial (Dominical)", value: "Ingenieria Industrial - Dominical" },
+
+    // Virtuales
+    { label: "— Carreras Virtuales —", value: "", disabled: true },
+    { label: "Ingeniería en Sistemas Computacionales (Virtual)", value: "Ingenieria En Sistemas Computacionales - Virtual" },
+    { label: "Derecho (Virtual)", value: "Derecho - Virtual" },
+    { label: "Administración (Virtual)", value: "Administración - Virtual" },
+    { label: "Psicología (Virtual)", value: "Psicologia - Virtual" },
+    { label: "Pedagogía (Virtual)", value: "Pedagogia - Virtual" },
+    { label: "Ciencias del Deporte y Gestión Deportiva (Virtual)", value: "Ciencias del deporte y gestion deportiva - Virtual" },
+    { label: "Contaduría (Virtual)", value: "Contaduria - Virtual" },
+    { label: "Criminología (Virtual)", value: "Criminologia - Virtual" },
+    { label: "Trabajo Social (Virtual)", value: "Trabajo social - Virtual" },
+    { label: "Ingeniería Industrial (Virtual)", value: "Ingenieria Industrial - Virtual" },
   ];
 
   // Manejar cambios en inputs y select
@@ -96,102 +141,32 @@ export default function InscribirAlumnos() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Nombre y apellidos */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <input
-                type="text"
-                name="nombre"
-                placeholder="Nombre"
-                onChange={handleChange}
-                required
-                className="input"
-              />
-              <input
-                type="text"
-                name="apellido_paterno"
-                placeholder="Apellido paterno"
-                onChange={handleChange}
-                required
-                className="input"
-              />
-              <input
-                type="text"
-                name="apellido_materno"
-                placeholder="Apellido materno"
-                onChange={handleChange}
-                required
-                className="input"
-              />
+              <input type="text" name="nombre" placeholder="Nombre" onChange={handleChange} required className="input" />
+              <input type="text" name="apellido_paterno" placeholder="Apellido paterno" onChange={handleChange} required className="input" />
+              <input type="text" name="apellido_materno" placeholder="Apellido materno" onChange={handleChange} required className="input" />
             </div>
 
             {/* Fecha y CURP */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="date"
-                name="fecha_nacimiento"
-                onChange={handleChange}
-                required
-                className="input"
-              />
-              <input
-                type="text"
-                name="curp"
-                placeholder="CURP"
-                onChange={handleChange}
-                required
-                className="input uppercase"
-                maxLength="18"
-              />
+              <input type="date" name="fecha_nacimiento" onChange={handleChange} required className="input" />
+              <input type="text" name="curp" placeholder="CURP" onChange={handleChange} required className="input uppercase" maxLength="18" />
             </div>
 
             {/* Correo y contraseña */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="email"
-                name="correo"
-                placeholder="Correo electrónico"
-                onChange={handleChange}
-                required
-                className="input"
-              />
-              <input
-                type="password"
-                name="contraseña"
-                placeholder="Contraseña"
-                onChange={handleChange}
-                required
-                className="input"
-              />
+              <input type="email" name="correo" placeholder="Correo electrónico" onChange={handleChange} required className="input" />
+              <input type="password" name="contraseña" placeholder="Contraseña" onChange={handleChange} required className="input" />
             </div>
 
             {/* Teléfono y cuatrimestre */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="tel"
-                name="telefono"
-                placeholder="Teléfono"
-                onChange={handleChange}
-                required
-                className="input"
-              />
-              <input
-                type="number"
-                name="cuatrimestre"
-                placeholder="Cuatrimestre"
-                onChange={handleChange}
-                required
-                className="input"
-              />
+              <input type="tel" name="telefono" placeholder="Teléfono" onChange={handleChange} required className="input" />
+              <input type="number" name="cuatrimestre" placeholder="Cuatrimestre" onChange={handleChange} required className="input" />
             </div>
 
-            {/* Dirección y carrera (select) */}
+            {/* Dirección y carrera */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                name="direccion"
-                placeholder="Dirección"
-                onChange={handleChange}
-                required
-                className="input"
-              />
+              <input type="text" name="direccion" placeholder="Dirección" onChange={handleChange} required className="input" />
 
               {/* Select de carrera */}
               <select
@@ -203,8 +178,13 @@ export default function InscribirAlumnos() {
               >
                 <option value="">Selecciona una carrera</option>
                 {carreras.map((carrera, index) => (
-                  <option key={index} value={carrera}>
-                    {carrera}
+                  <option
+                    key={index}
+                    value={carrera.value}
+                    disabled={carrera.disabled}
+                    className={carrera.disabled ? "font-bold text-purple-700" : ""}
+                  >
+                    {carrera.label}
                   </option>
                 ))}
               </select>

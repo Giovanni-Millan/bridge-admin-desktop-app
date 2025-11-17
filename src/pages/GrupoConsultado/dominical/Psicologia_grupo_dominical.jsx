@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../../components/Navbar';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -9,21 +9,23 @@ import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
 
-export default function Sistemas_grupo() {
+export default function PsicologiaDominical() {
   const [alumno, setAlumno] = useState([]);
 
+  // 🔹 Endpoint específico para Psicología Dominical
   useEffect(() => {
-    axios.get('http://localhost:4000/ConsultarAlumnosSistemas')
+    axios.get('http://localhost:4000/ConsultarAlumnosPsicologiaDominical')
       .then(res => setAlumno(res.data))
       .catch(err => console.log(err));
   }, []);
 
+  // 🔹 Exportar PDF
   const exportPDF = () => {
     const doc = new jsPDF();
 
     doc.setFontSize(16);
     doc.setTextColor(85, 26, 139);
-    doc.text("Lista de Alumnos - Carrera de Sistemas", 14, 20);
+    doc.text("Lista de Alumnos - Psicología (Modalidad Dominical)", 14, 20);
 
     autoTable(doc, {
       startY: 30,
@@ -61,20 +63,18 @@ export default function Sistemas_grupo() {
       }
     });
 
-    doc.save("alumnos_sistemas.pdf");
+    doc.save("alumnos_psicologia_dominical.pdf");
 
     Swal.fire({
       icon: 'success',
       title: '¡PDF guardado!',
-      text: 'Revisa tu carpeta de <b>Descargas</b>',
-      html: `
-        Revisa tu carpeta de <b>Descargas</b>
-        `,
+      html: `Revisa tu carpeta de <b>Descargas</b>`,
       timer: 1500,
       showConfirmButton: false,
     });
   };
 
+  // 🔹 Exportar Excel
   const exportExcel = () => {
     const worksheetData = alumno.map((a) => ({
       Nombre: a.nombre,
@@ -88,40 +88,39 @@ export default function Sistemas_grupo() {
 
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Alumnos Sistemas");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Psicología Dominical");
 
-    XLSX.writeFile(workbook, "alumnos_sistemas.xlsx");
+    XLSX.writeFile(workbook, "alumnos_psicologia_dominical.xlsx");
 
     Swal.fire({
       icon: 'success',
       title: '¡Excel guardado!',
-      text: '',
-      html: `
-        Revisa tu carpeta de <b>Descargas</b>
-        `,
+      html: `Revisa tu carpeta de <b>Descargas</b>`,
       timer: 1500,
       showConfirmButton: false,
     });
   };
 
   return (
-    
     <main className="min-h-screen bg-gray-50 text-gray-800">
-      <Navbar titulo="Carrera de Sistemas - Alumnos" />
+      {/* 🔹 Navbar con título de la carrera */}
+      <Navbar titulo="Carrera de Psicología - Modalidad Dominical" />
 
       <div className="max-w-7xl mx-auto px-6 py-10">
+        {/* 🔹 Encabezado y botones */}
         <div className="flex justify-between items-center mb-6">
           {/* Botón de regreso */}
-                <div className="mt-8 ml-10">
-                  <Link
-                    to={'/ConsultarGrupos'}
-                    className="inline-flex items-center gap-2 bg-purple-200 text-purple-900 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-purple-300 transition-all duration-300"
-                  >
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                    <span>Regresar</span>
-                  </Link>
-                </div>
+          <div className="mt-8 ml-10">
+            <Link
+              to={'/ConsultarGrupos'}
+              className="inline-flex items-center gap-2 bg-purple-200 text-purple-900 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-purple-300 transition-all duration-300"
+            >
+              <FontAwesomeIcon icon={faArrowLeft} />
+              <span>Regresar</span>
+            </Link>
+          </div>
 
+          {/* Botones de exportación */}
           <div className="flex gap-3">
             <button
               onClick={exportPDF}
@@ -143,6 +142,7 @@ export default function Sistemas_grupo() {
           </div>
         </div>
 
+        {/* 🔹 Tabla de alumnos */}
         <div className="overflow-x-auto rounded-lg shadow border border-gray-200">
           <table className="min-w-full bg-white rounded-lg">
             <thead>
@@ -160,7 +160,7 @@ export default function Sistemas_grupo() {
               {alumno.length === 0 ? (
                 <tr>
                   <td colSpan="7" className="text-center py-6 text-gray-500 italic">
-                    No hay alumnos disponibles.
+                    No hay alumnos registrados en esta modalidad.
                   </td>
                 </tr>
               ) : (
@@ -172,7 +172,9 @@ export default function Sistemas_grupo() {
                     <td className="py-3 px-4">{data.nombre}</td>
                     <td className="py-3 px-4">{data.apellido_paterno}</td>
                     <td className="py-3 px-4">{data.apellido_materno}</td>
-                    <td className="py-3 px-4">{data.fecha_nacimiento}</td>
+                    <td className="p-3 text-xs">
+                      {new Date(data.fecha_nacimiento).toLocaleDateString("es-MX")}
+                    </td>
                     <td className="py-3 px-4">{data.correo}</td>
                     <td className="py-3 px-4">{data.telefono}</td>
                     <td className="py-3 px-4">{data.cuatrimestre}</td>

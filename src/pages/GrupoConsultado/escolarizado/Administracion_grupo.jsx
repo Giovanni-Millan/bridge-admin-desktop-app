@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../../components/Navbar';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -166,7 +166,9 @@ export default function Administracion_grupo() {
                     <td className="py-3 px-4">{data.nombre}</td>
                     <td className="py-3 px-4">{data.apellido_paterno}</td>
                     <td className="py-3 px-4">{data.apellido_materno}</td>
-                    <td className="py-3 px-4">{data.fecha_nacimiento}</td>
+                    <td className="p-3 text-xs">
+                      {new Date(data.fecha_nacimiento).toLocaleDateString("es-MX")}
+                    </td>
                     <td className="py-3 px-4">{data.correo}</td>
                     <td className="py-3 px-4">{data.telefono}</td>
                     <td className="py-3 px-4">{data.cuatrimestre}</td>

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../../components/Navbar";
+import Navbar from "../../../../components/Navbar";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faEdit, faTrash, faEye, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-export default function ConsultarAlumnosAdministracion() {
+export default function ConsultarAlumnosCriminologiaSabatino() {
   const [alumnos, setAlumnos] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAlumnos = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/ConsultarAlumnosSistemas");
+        const response = await axios.get("http://localhost:4000/ConsultarAlumnosCriminologiaSabatino");
         setAlumnos(response.data);
       } catch (error) {
         console.error("Error al obtener los alumnos:", error);
@@ -47,7 +47,8 @@ export default function ConsultarAlumnosAdministracion() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar titulo="Modificar Alumnos Sistemas" />
+      {/* 🔹 Navbar con título adaptado */}
+      <Navbar titulo="Modificar Alumnos Criminología Sabatino" />
 
       <div className="p-6">
         {/* Encabezado */}
@@ -61,7 +62,7 @@ export default function ConsultarAlumnosAdministracion() {
               <span>Regresar</span>
             </Link>
           </div>
-          <h1 className="text-xl font-bold text-gray-800">Lista de Alumnos</h1>
+          <h1 className="text-xl font-bold text-gray-800">Lista de Alumnos de Criminología Sabatino</h1>
         </div>
 
         {/* Tabla responsive */}
@@ -93,7 +94,9 @@ export default function ConsultarAlumnosAdministracion() {
                   <td className="p-3 text-xs">{alumno.nombre}</td>
                   <td className="p-3 text-xs">{alumno.apellido_paterno}</td>
                   <td className="p-3 text-xs">{alumno.apellido_materno}</td>
-                  <td className="p-3 text-xs">{alumno.fecha_nacimiento}</td>
+                  <td className="p-3 text-xs">
+                      {new Date(alumno.fecha_nacimiento).toLocaleDateString("es-MX")}
+                    </td>
                   <td className="p-3 text-xs">{alumno.curp}</td>
                   <td className="p-3 text-xs">{alumno.correo}</td>
                   <td className="p-3 text-xs">{alumno.telefono}</td>
@@ -103,10 +106,11 @@ export default function ConsultarAlumnosAdministracion() {
 
                   {/* Botones de acción */}
                   <td className="p-3 text-center">
-                    <div className="grid grid-cols-2 gap-1 justify-center ">
+                    <div className="grid grid-cols-2 gap-1 justify-center">
                       {/* Ver */}
                       <button
-                        className="w-8 h-8 flex items-center justify-center bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition" title="Ver Informacion del usuario"
+                        className="w-8 h-8 flex items-center justify-center bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                        title="Ver información del alumno"
                         onClick={() =>
                           Swal.fire({
                             title: "Detalles del Alumno",
@@ -126,7 +130,8 @@ export default function ConsultarAlumnosAdministracion() {
                       </button>
 
                       {/* Editar */}
-                      <Link title="Editar Informacion del usuario"
+                      <Link
+                        title="Editar información del alumno"
                         to={`/ModificarInfoAlumno/${alumno.id_alumno}`}
                         className="w-8 h-8 flex items-center justify-center bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
                       >
@@ -134,7 +139,8 @@ export default function ConsultarAlumnosAdministracion() {
                       </Link>
 
                       {/* Eliminar */}
-                      <button title="Eliminar Usuario"
+                      <button
+                        title="Eliminar alumno"
                         className="w-8 h-8 flex items-center justify-center bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                         onClick={() => handleDelete(alumno.id_alumno)}
                       >
@@ -142,7 +148,8 @@ export default function ConsultarAlumnosAdministracion() {
                       </button>
 
                       {/* Adjuntar calificaciones */}
-                      <Link title="Agregar calificaciones"
+                      <Link
+                        title="Agregar calificaciones"
                         to={`/ListarCalisAlumno/${alumno.id_alumno}`}
                         className="w-8 h-8 flex items-center justify-center bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
                       >
@@ -159,4 +166,3 @@ export default function ConsultarAlumnosAdministracion() {
     </div>
   );
 }
-
