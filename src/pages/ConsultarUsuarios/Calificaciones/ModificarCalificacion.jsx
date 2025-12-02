@@ -16,7 +16,7 @@ export default function ModificarCalificacion() {
   const [parcial_3, setParcial_3] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/ConsultarCalisPorCaliId/${id}`)
+    axios.get('http://localhost:4000/ConsultarCalisPorCaliId/'+id)
       .then(res => {
         if (res.data && res.data.length > 0) {
           const info = res.data[0];
@@ -53,7 +53,7 @@ export default function ModificarCalificacion() {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.patch(`http://192.168.1.198:4000/ModificarCalis/${id}`, {
+        axios.patch(`http://localhost:4000/ModificarCalis/${id}`, {
           parcial_1, parcial_2, parcial_3
         })
         .then(() => {

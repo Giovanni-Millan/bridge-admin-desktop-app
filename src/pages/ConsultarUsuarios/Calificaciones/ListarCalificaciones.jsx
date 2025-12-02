@@ -16,11 +16,11 @@ export default function CalificacionesAlumno() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/ConsultarCalisPorAlumno/${id}`)
+    axios.get('http://localhost:4000/ConsultarCalisPorAlumno/'+id)
       .then(res => setAlumno(res.data))
       .catch(err => console.log(err));
 
-    axios.get(`http://localhost:4000/ConsultarInfoUsuarioId/${id}`)
+    axios.get('http://localhost:4000/ConsultarInfoUsuarioId/'+id)
       .then(res => setInfoAlumno(res.data))
       .catch(err => console.log(err));
   }, [id]);
